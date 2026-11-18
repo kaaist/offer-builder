@@ -126,6 +126,10 @@ body.inapp .hero p.lead,body.inapp .hero .btn,body.inapp .hero .meta,body.inapp 
 
 .hero .free{font-size:14px;color:#a9a9b8;margin-left:14px}
 body.inapp .landing{display:none}
+body.inapp .hero .free{display:none}
+body.embed .hero .in{padding-top:170px}
+body.embed.inapp .hero .in{padding-top:140px;padding-bottom:40px}
+@media screen and (max-width:860px){body.embed .hero .in{padding-top:130px}body.embed.inapp .hero .in{padding-top:115px}}
 .lp{padding:72px 0;border-top:1px solid var(--line)}
 .lp h2{font-size:clamp(34px,4.6vw,52px);letter-spacing:-.035em;line-height:1.04;margin-bottom:16px;max-width:820px}
 .lp p.big{font-size:20px;line-height:1.55;color:var(--sub);max-width:760px;margin-bottom:28px}
@@ -867,6 +871,7 @@ async function exportFile(target){
 /* ===== embedded mode (iframe on diygenius.com) ===== */
 const EMBED = window.parent && window.parent !== window;
 if (EMBED) {
+  document.body.classList.add("embed");
   const sendH = () => { try { parent.postMessage({ type: "tob-height", h: Math.ceil(document.body.getBoundingClientRect().height) }, "*"); } catch (e) {} };
   try { new ResizeObserver(sendH).observe(document.body); } catch (e) {}
   window.addEventListener("load", sendH); setInterval(sendH, 1200); sendH();
