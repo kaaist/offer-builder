@@ -68,6 +68,13 @@ body.inapp .hero p.lead,body.inapp .hero .btn,body.inapp .hero .meta,body.inapp 
 .step h2{font-size:44px;letter-spacing:-.03em;line-height:1.05;margin-bottom:10px}
 .step .intro{font-size:19px;line-height:1.5;color:var(--sub);max-width:720px;margin-bottom:22px}
 
+.guide{display:flex;gap:18px;align-items:flex-start;padding:18px 20px;margin:0 0 22px;border:1px solid var(--line);border-radius:20px;background:#fbfbfd}
+.guide img{flex:0 0 auto;width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 18%;box-shadow:0 0 0 3px #fff,0 0 0 4px rgba(123,77,255,.35)}
+.guide .who{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.guide .who b{color:#1d1d1f;letter-spacing:0;text-transform:none;font-size:15px;margin-left:4px}
+.guide p{font-size:14.5px;line-height:1.5;color:var(--sub);margin:0 0 6px}
+.guide p:last-child{margin:0}
+@media screen and (max-width:860px){.guide{padding:14px;gap:12px}.guide img{width:52px;height:52px}}
 .prompts{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:0 0 22px;list-style:none}
 .prompts li{position:relative;padding:8px 0 8px 28px;font-size:15px;line-height:1.4;color:var(--sub);border-bottom:1px solid var(--line)}
 .prompts li:before{content:"";position:absolute;left:0;top:10px;width:16px;height:16px;border-radius:50%;background:var(--grad);opacity:.85}
@@ -573,11 +580,12 @@ function fieldHTML(f){
 }
 function chipsHTML(key,list,neg){const on=S.chips[key]||[];return `<div class="chips ${neg?"neg":""}" data-chips="${key}">${list.map(c=>`<button class="chip ${on.includes(c)?"on":""}">${c}</button>`).join("")}</div>`}
 
+const GUIDE = `<div class="guide"><img src="https://www.diygenius.com/wp-content/uploads/2026/11/kyle-pearce-workshop-guide.jpg" alt="Kyle Pearce" width="64" height="64"><div><div class="who">Your guide <b>Kyle Pearce</b></div><p>I started DIY Genius in 2011 because I felt the standardized school system was leaving creative people behind, and I wanted to develop new experiential methods to make learning fun, playful and creative.</p><p>Today, I help experts teach outside the system by productizing their genius and educating through live workshops, group coaching and retreats.</p></div></div>`;
 function renderStep(){
   const i=S.step,st=STEPS[i];
   let h=`<div class="step"><div class="banner"><svg id="bn" viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">${silkSVG(900,190,{n:30,cy:100,amp:42,freq:.009+i*.0012,phase:i*.9,spread:60,drift:i%2?-30:30,seed:10+i,star:[700-i*40,60+((i*37)%60),16]})}</svg><div class="num">${i+1}</div></div>
   <div class="eyebrow">${st.eyebrow}</div><h2>${st.title}</h2><p class="intro">${st.intro}</p>
-  <ul class="prompts">${st.prompts.map(p=>`<li>${p}</li>`).join("")}</ul>
+  ${i===0?GUIDE:""}<ul class="prompts">${st.prompts.map(p=>`<li>${p}</li>`).join("")}</ul>
   ${i===0?`<div class="voicetip"><span style="flex:0 0 auto">${MIC_DARK.replace("<svg","<svg width=\"22\" height=\"22\"")}</span><div><b>We recommend using your voice.</b> Press the mic and talk freely. Don't stop to fix anything. Typing invites the inner editor and resistance; speaking lets it flow. Tell your story, share what you're into, and let it all come out. The tool will tidy it up later.</div></div>`:""}
   <div class="dump"><div class="top"><div><h4>${st.dump}</h4><span id="micHint">Speak or type. Messy is fine.</span></div><button class="mic" id="mic"><span class="dot">${MIC}</span><span id="micLabel">Start talking</span></button></div>
   <textarea id="dump" placeholder="Press the mic and start talking, or type here…">${esc(val("dump_"+st.id))}</textarea><div class="live" id="live"></div></div>`;
