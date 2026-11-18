@@ -867,7 +867,7 @@ async function exportFile(target){
 /* ===== embedded mode (iframe on diygenius.com) ===== */
 const EMBED = window.parent && window.parent !== window;
 if (EMBED) {
-  const sendH = () => { try { parent.postMessage({ type: "tob-height", h: Math.ceil(document.documentElement.scrollHeight) }, "*"); } catch (e) {} };
+  const sendH = () => { try { parent.postMessage({ type: "tob-height", h: Math.ceil(document.body.getBoundingClientRect().height) }, "*"); } catch (e) {} };
   try { new ResizeObserver(sendH).observe(document.body); } catch (e) {}
   window.addEventListener("load", sendH); setInterval(sendH, 1200); sendH();
 }
